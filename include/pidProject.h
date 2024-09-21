@@ -1,7 +1,10 @@
 #ifndef PID_PROJECT_H  
 #define PID_PROJECT_H
 
-#include <ctime>
+#include <iostream>
+//#include <ctime>
+#include <chrono>
+#include <thread>
 
 namespace PidProject {
 
@@ -11,6 +14,8 @@ public:
     //~Thermometer();
 
     float GetTemperature() const;
+private:
+    std::chrono::time_point<std::chrono::high_resolution_clock> startTime = std::chrono::high_resolution_clock::now(); 
 };
 
 class HeaterController {
@@ -20,27 +25,28 @@ public:
 
     // Function to set heater power in percentage (0% to 100%)
     // put guards around 1 and 0, thats the xscale, comment
-    std::time_t startTime = std::time(nullptr);
     void SetPower(float powerPercentage);
+private:
+    std::chrono::time_point<std::chrono::high_resolution_clock> startTime = std::chrono::high_resolution_clock::now(); 
 };
 
 class PidController {
 public:
-    PidController();
+    PidController(float inKp, float inTi, float inTd);
     //~PidController();
 
     // Setters and Getters for PID parameters
     void SetTemperatureSetpoint(float setpoint);
     float GetTemperatureSetpoint() const;
 
-    void SetP(float P);
-    float GetP() const;
+    void SetKp(float newKp);
+    float GetKp() const;
 
-    void SetI(float I);
-    float GetI() const;
+    void SetTi(float newTi);
+    float GetTi() const;
 
-    void SetD(float D);
-    float GetD() const;
+    void SetTd(float newTd);
+    float GetTd() const;
 
     // Enable/Disable control features
     void EnablePowerUpdate(bool enable);
@@ -61,8 +67,7 @@ private:
     float kp, ti, td; // PID coefficients
     float lastError, integralSum;
     float currentPower;
-    std::time_t latestTime = std::time(nullptr);
-
+    std::chrono::time_point<std::chrono::high_resolution_clock> latestTime = std::chrono::high_resolution_clock::now(); 
 
     bool powerUpdateEnabled;
     bool pTermEnabled;

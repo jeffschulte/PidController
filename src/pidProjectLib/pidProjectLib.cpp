@@ -1,29 +1,28 @@
 #include <pidProject.h>
-#include <chrono>
-#include <thread>
-#include <cmath>
+//#include <cmath>
 
 
 namespace PidProject {
 
-#define defaultKp 1.0;
-#define defaultTi 1.0;
-#define defaultTd 1.0;
+#define defaultKp 1.0
+#define defaultTi 1.0
+#define defaultTd 1.0
 
 
 Thermometer::Thermometer() {}
 
-float Thermometer::GetTemperature() {
-    std::time_t currentTime = std::time(nullptr);
-    float deltaTime = float(currentTime - startTime);
-    return 2.0 - (2.0 / deltaTime);
+float Thermometer::GetTemperature() const {
+    auto currentTime = std::chrono::high_resolution_clock::now(); 
+    float timeDelta = (std::chrono::duration<float>(currentTime - startTime)).count();
+    printf("TimeDelta %f\n", timeDelta);
+    return 2.0 - (2.0 / (1.0 + timeDelta));
 }
 
 HeaterController::HeaterController() {}
 
 void HeaterController::SetPower(float powerPercentage) {
     // TODO
-    printf("Setting power to %f", powerPercentage);
+    printf("Setting power to %f\n", powerPercentage);
     return;
 };
 
@@ -35,7 +34,6 @@ PidController::PidController(float inKp, float inTi, float inTd)
         if (kp > 0) kp = inKp;
         if (ti > 0) ti = inTi;
         if (td > 0) td = inTd;
-        std::time_t start = std::time(nullptr);
 }
 
 //PidController::~PidController() {}
@@ -69,7 +67,7 @@ void PidController::SetTd(float newTd) {
 }
 
 float PidController::GetTd() const {
-    return Td;
+    return td;
 }
 
 void PidController::EnablePowerUpdate(bool enable) {
@@ -112,11 +110,11 @@ void PidController::UpdatePower() {
     
     // Get time and calculate time delta between now and last update
     // TODO check the units (check all units)
-    std::time_t newTime = std::time(nullptr);
-    float timeDelta = float(newTime - latestTime);
+    auto newTime = std::chrono::high_resolution_clock::now(); 
+    float timeDelta = (std::chrono::duration<float>(newTime - latestTime)).count();
 
     // Proportional term
-    float pTerm = pTermEnabled ? Kp * error : 0.0f;
+    float pTerm = pTermEnabled ? kp * error : 0.0f;
 
     // Integral term
     integralSum += error * timeDelta; // Accumulate error over time
@@ -140,6 +138,7 @@ void PidController::UpdatePower() {
 
     // Update last error
     lastError = error;
+    latestTime = newTime;
 }
 
 } // namespace pidProject
