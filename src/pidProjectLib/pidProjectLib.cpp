@@ -9,19 +9,92 @@ namespace PidProject {
 #define defaultTd 1.0
 
 
-Thermometer::Thermometer() {}
+Thermometer::Thermometer() {
+
+    unsigned int thing = GetNumHidDevices(0, 0);
+    printf("GetNumHidDevices %d\n", thing);
+    
+    // // Initialize the CP2112 USB-to-I2C bridge
+    // cp2112Handle = CP2112_Open(0);  // 0 indicates the first CP2112 device connected
+    // if (cp2112Handle == INVALID_HANDLE_VALUE) {
+    //     std::cerr << "Failed to open CP2112 device" << std::endl;
+    //     //TODO exit like this?
+    //     exit(1);
+    // }
+
+    // // Configure I2C communication (assuming standard settings)
+    // CP2112_SetI2CConfig(cp2112Handle, I2C_FREQUENCY_STANDARD);
+}
+
+Thermometer::~Thermometer() {
+    // // Close the CP2112 device
+    // CP2112_Close(cp2112Handle);
+};
+
 
 float Thermometer::GetTemperature() const {
     auto currentTime = std::chrono::high_resolution_clock::now(); 
     float timeDelta = (std::chrono::duration<float>(currentTime - startTime)).count();
     printf("TimeDelta %f\n", timeDelta);
     return 2.0 - (2.0 / (1.0 + timeDelta));
+
+
+    // // Send an I2C command to read temperature from MAX31889
+    // // MAX31889 I2C address (example: 0x48) and temperature register address (example: 0x00)
+    // uint8_t i2cAddress = 0x48;  // Replace with actual I2C address of MAX31889
+    // uint8_t readTempCmd[1] = {0x00};  // Register to read temperature data
+    // uint8_t tempData[2] = {0};  // Buffer for the 16-bit temperature data
+
+    // // Write command to the sensor to request temperature
+    // CP2112_I2CWrite(cp2112Handle, i2cAddress, readTempCmd, sizeof(readTempCmd));
+
+    // // Read temperature data (2 bytes)
+    // CP2112_I2CRead(cp2112Handle, i2cAddress, tempData, sizeof(tempData));
+
+    // // Convert the received data into a temperature value
+    // int16_t rawTemperature = (tempData[0] << 8) | tempData[1];
+    // return rawTemperature * 0.0078125;  // Conversion per MAX31889 datasheet
 }
 
-HeaterController::HeaterController() {}
+
+HeaterController::HeaterController() {
+    float thing = LJUSB_GetLibraryVersion();
+    printf("LJUSB_GetLibraryVersion %f\n", thing);
+    unsigned int count = LJUSB_GetDevCount(0);
+    printf("LJUSB_GetDevCount %d\n", count);
+
+    // // Open the LabJack U3-HV device
+    // if (OpenLabJack(LJ_dtU3, LJ_ctUSB, "1", 1, &lngHandle) != LJE_NOERROR) {
+    //     std::cerr << "Failed to open LabJack U3-HV device" << std::endl;
+    //     // TODO exit like this?
+    //     exit(1);
+    // }
+
+    // // Configure FIO4 for PWM output
+    // // Enable FIO4 for PWM (0 = off, 1 = on)
+    // ePut(lngHandle, LJ_ioPUT_CONFIG, LJ_chPWM_ENABLE, 1, 0);
+}
+
+HeaterController::~HeaterController() {
+    // // Disable PWM on FIO4 and close the device
+    // ePut(lngHandle, LJ_ioPUT_CONFIG, LJ_chPWM_ENABLE, 0, 0);  // Disable PWM
+    // CloseLabJack(lngHandle);
+}
 
 void HeaterController::SetPower(float powerPercentage) {
-    // TODO
+
+    // // Set PWM frequency (in Hz) and duty cycle (0.0 to 1.0)
+    // double frequency = 1000.0;  // Example: 1 kHz PWM frequency
+    // double dutyCycle = 0.5;     // 50% duty cycle
+
+    // // Configure FIO4 for PWM with specified frequency and duty cycle
+    // ePut(lngHandle, LJ_ioPUT_DAC, 0, frequency, 0);  // Set frequency
+    // ePut(lngHandle, LJ_ioPUT_DAC, 1, dutyCycle, 0);  // Set duty cycle
+
+    // // // Simulate a workload (e.g., wait for user input or run a loop)
+    // // std::cout << "PWM signal output on FIO4 with 50% duty cycle" << std::endl;
+    // // std::cin.get();  // Wait for user input to stop
+
     printf("Setting power to %f\n", powerPercentage);
     return;
 };

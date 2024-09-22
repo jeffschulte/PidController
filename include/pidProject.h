@@ -5,29 +5,37 @@
 //#include <ctime>
 #include <chrono>
 #include <thread>
+//#include "slab_usb_i2c.h"  // Include Silicon Labs CP2112 API
+
+#include "labjackusb.h"  // Include LabJackUD library
+#include "hidapi.h"
+#include "HIDDevice.h"
 
 namespace PidProject {
 
 class Thermometer {
 public:
     Thermometer();
-    //~Thermometer();
+    ~Thermometer();
 
-    float GetTemperature() const;
+    float GetTemperature() const; // returns temp in C
+
 private:
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime = std::chrono::high_resolution_clock::now(); 
+    HANDLE cp2112Handle;
 };
 
 class HeaterController {
 public:
     HeaterController();
-    //~HeaterController();
+    ~HeaterController();
 
     // Function to set heater power in percentage (0% to 100%)
     // put guards around 1 and 0, thats the xscale, comment
     void SetPower(float powerPercentage);
 private:
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime = std::chrono::high_resolution_clock::now(); 
+    long lngHandle;
 };
 
 class PidController {
