@@ -1,4 +1,6 @@
 #include <pidProject.h>
+#include <CP2112.h>
+#include <Max31889.h>
 //#include <cmath>
 
 
@@ -11,9 +13,43 @@ namespace PidProject {
 
 Thermometer::Thermometer() {
 
-    unsigned int thing = GetNumHidDevices(0, 0);
-    printf("GetNumHidDevices %d\n", thing);
+    uint16_t vid = 0x10c4; // Silicon Labs.
+    uint16_t  pid = 0xea90; // CP2112 HID I2C Bridge.
     
+    unsigned int thing = GetNumHidDevices(vid, pid);
+    printf("GetNumHidDevices %d\n", thing);
+    //uint8_t status = GetHidString(DWORD deviceIndex, WORD vid, WORD pid, BYTE hidStringType, char* deviceString, DWORD deviceStringLength);
+    char device_string_vid[MAX_VID_LENGTH];
+    uint8_t status = GetHidString(0, vid, pid, HID_VID_STRING, device_string_vid, MAX_VID_LENGTH);
+    char device_string_pid[MAX_PID_LENGTH];
+    status = GetHidString(0, vid, pid, HID_PID_STRING, device_string_pid, MAX_PID_LENGTH);
+
+    char device_string_path[MAX_PATH_LENGTH];
+    status = GetHidString(0, vid, pid, HID_PATH_STRING, device_string_path, MAX_PATH_LENGTH);
+    
+    char device_string_serial[MAX_SERIAL_STRING_LENGTH];
+    status = GetHidString(0, vid, pid, HID_SERIAL_STRING, device_string_serial, MAX_SERIAL_STRING_LENGTH);
+
+    char device_string_manu[MAX_MANUFACTURER_STRING_LENGTH];
+    status = GetHidString(0, vid, pid, HID_MANUFACTURER_STRING, device_string_manu, MAX_MANUFACTURER_STRING_LENGTH);
+
+    char device_string_prod[MAX_PRODUCT_STRING_LENGTH];
+    status = GetHidString(0, vid, pid, HID_PRODUCT_STRING, device_string_prod, MAX_PRODUCT_STRING_LENGTH);
+
+    printf("pid %s, vid %s\ndevice_string_path %s, device_string_serial %s\ndevice_string_manu %s, device_string_prod %s\n", 
+                device_string_vid, device_string_pid, device_string_path, device_string_serial, device_string_manu, device_string_prod);
+
+
+    Max31889 max31889;
+    max31889.initialize();
+    uint64_t temp = max31889.temperature();
+    max31889.cleanup();
+    printf("\nRead tempurature = %f\n\n", temp);
+
+    // CP2112 cp2112;
+    // cp2112.initialize();
+    // cp2112.cleanup();
+
     // // Initialize the CP2112 USB-to-I2C bridge
     // cp2112Handle = CP2112_Open(0);  // 0 indicates the first CP2112 device connected
     // if (cp2112Handle == INVALID_HANDLE_VALUE) {

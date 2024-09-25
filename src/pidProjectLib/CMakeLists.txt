@@ -1,6 +1,6 @@
 project(pidProjectLib)
 
-add_library(${PROJECT_NAME} STATIC pidProjectLib.cpp)
+add_library(${PROJECT_NAME} STATIC pidProjectLib.cpp CP2112.cpp Max31889.cpp)
 
 # find and link to labjack shared lib
 link_directories(${CMAKE_SOURCE_DIR}/exodriver/liblabjackusb)
