@@ -3,6 +3,7 @@
 //#include <synchapi.h>
 #include <unistd.h>
 #include <limits>
+#include <iostream>
 
 /// <summary>
 /// Opens the i2c device. There is no MAX31889-specific initialization
@@ -34,9 +35,13 @@ double Max31889::temperature()
 		if (status_buffer[0] & 0x01) {
 			// we have a temperature waiting for us
 			i2c.read(address, temperature_read_register, temperature_buffer, buffer_size, 2);
+			//uint16_t readTemp = (uint16_t(temperature_buffer[0]) << 8) + uint16_t(temperature_buffer[1]);
+			//printf("readTemp %d\n", readTemp);
+			//printf("read temp %d\n", uint16_t((temperature_buffer[0] << 8) + temperature_buffer[1]));
 			return ((temperature_buffer[0] << 8) + temperature_buffer[1]) * 0.005;
+			//return float(readTemp) * 0.005;
 		}
-		sleep(5);
+		sleep(3);
 	}
 	return std::numeric_limits<double>::infinity();;
 }

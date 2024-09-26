@@ -133,9 +133,9 @@ int CP2112::read(uint8_t address, uint8_t read_register, uint8_t* data, std::siz
     HID_SMBUS_S0 read_status = 0;
     BYTE num_bytes_read = 0;
     status = HidSmbus_GetReadResponse(device, &read_status, data, buffer_length, &num_bytes_read);
-    //std::cout << "Status read:" << std::endl;
-    //std::cout << "Read status: " << int(read_status) << std::endl;
-    //std::cout << "Num bytes read (should be 1): " << int(num_bytes_read) << std::endl;
+    std::cout << "Status read:" << int(status) << std::endl;
+    std::cout << "Read status: " << int(read_status) << std::endl;
+    std::cout << "Num bytes read (should be 1): " << int(num_bytes_read) << std::endl;
     if (status != HID_SMBUS_SUCCESS) {
         std::cerr << "HidSmbus_GetReadResponse failed with error code: " << int(status) << std::endl;
         return status;
@@ -143,6 +143,12 @@ int CP2112::read(uint8_t address, uint8_t read_register, uint8_t* data, std::siz
     if (num_bytes_read != num_bytes) {
         std::cerr << "Bytes read do not match bytes requested: " << int(num_bytes_read) << ", " << num_bytes << std::endl;
         return -1; // we consider this an error, even if the CP2112 didn't
+        // auto status = HidSmbus_Close(device);
+        // if (status != HID_SMBUS_SUCCESS) {
+        //     std::cerr << "HidSmbus_Close failed with error code: " << int(status) << std::endl;
+        // }
+        // std::cout << "CP2112 cleaned up!" << std::endl;
+        // exit(1);
     }
     return status;
 }
