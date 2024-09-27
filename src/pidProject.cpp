@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
     float ti = 188; // seconds
     float td = 0.15 * ti; // seconds
     PidProject::PidController pid(kp, ti, td);
-
+    pid.UpdatePower();
     // for (int i=0;i<5;i++) {
     //     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     //     pid.UpdatePower();

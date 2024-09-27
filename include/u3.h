@@ -118,6 +118,10 @@ HANDLE openUSBConnection( int localID);
 //success.
 //localID = the local ID or serial number of the U3 you want to open
 HANDLE myBasicConfigMain();
+void buildConfigU3Bytes(BYTE * sendBuffer);
+int checkResponseForErrors(BYTE * recBuffer);
+void parseConfigU3Bytes(BYTE * recBuffer);
+
 int feedback_setup_HV_example(HANDLE hDevice, int pwmValue);
 
 void closeUSBConnection( HANDLE hDevice);
