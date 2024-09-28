@@ -72,6 +72,8 @@ public:
     Max31889 max31889; // Thermometer (originally had my own class but Coakley's did everything that was needed)
 
 private:
+    void LogToConsole(float timeSinceStart, float temperatureSetpoint, float currentTemperature, float power, float pTerm, float iTerm, float dTerm);
+    void LogToFile(float timeSinceStart, float temperatureSetpoint, float currentTemperature, float power, float pTerm, float iTerm, float dTerm);
     float temperatureSetpoint;
     float kp, ti, td; // PID coefficients
     float lastError, integralSum;
