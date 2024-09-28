@@ -2,14 +2,6 @@ project(pidProjectLib)
 
 add_library(${PROJECT_NAME} STATIC pidProjectLib.cpp CP2112.cpp Max31889.cpp)
 
-# Set RPATH for the executable specifically
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    INSTALL_RPATH "${CMAKE_BINARY_DIR}/src"
-    BUILD_RPATH "${CMAKE_BINARY_DIR}/src"
-    BUILD_WITH_INSTALL_RPATH TRUE
-    INSTALL_RPATH_USE_LINK_PATH TRUE
-)
-
 # find and link to labjack shared lib
 target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/libs/liblabjackusb.so.2.7.0)
 target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/libs/libu3.a)
