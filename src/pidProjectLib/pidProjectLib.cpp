@@ -434,7 +434,7 @@ void HeaterController::Cleanup() {
 void HeaterController::SetPower(float powerPercentage) {
     if (powerUpdateEnabled) {
         printf("Setting power to %f\n", powerPercentage);
-        SetPwmPower();
+        //SetPwmPower();
 
         // // Set PWM frequency (in Hz) and duty cycle (0.0 to 1.0)
         // double frequency = 1000.0;  // Example: 1 kHz PWM frequency
@@ -465,7 +465,7 @@ PidController::PidController(float inKp,
 
         heater.heaterEnabled = inHeaterEnabled;
         heater.powerUpdateEnabled = inPowerUpdateEnabled;
-        //max31889.initialize();
+        max31889.initialize();
         heater.Initialize();
         latestTime = startTime;
         logFile.open("logFile.csv");
@@ -557,8 +557,8 @@ void PidController::LogToFile(float timeSinceStart, float temperatureSetpoint, f
 
 void PidController::UpdatePower() {
     //Calculate the error (difference between setpoint and current temperature)
-    //float currentTemperature = max31889.temperature();
-    float currentTemperature = 10.0;
+    float currentTemperature = max31889.temperature();
+    //float currentTemperature = 10.0;
     printf("Temp = %f\n", currentTemperature);
     float error = temperatureSetpoint - currentTemperature;
     
