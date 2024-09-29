@@ -1,0 +1,37 @@
+﻿  pidProjectLib.cpp
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(34,40): error C2065: 'U3_PRODUCT_ID': undeclared identifier
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(34,17): error C3861: 'LJUSB_OpenDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(81,22): error C3861: 'LJUSB_Write': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(86,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(94,21): error C3861: 'LJUSB_Read': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(97,13): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(101,13): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(119,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(124,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(132,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(143,9): error C3861: 'sleep': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(151,5): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(206,22): error C3861: 'LJUSB_Write': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(209,13): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(213,13): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(222,21): error C3861: 'LJUSB_Read': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(225,13): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(229,13): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(247,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(252,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(260,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(276,40): error C2065: 'U3_PRODUCT_ID': undeclared identifier
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(276,17): error C3861: 'LJUSB_OpenDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(306,22): error C3861: 'LJUSB_Write': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(311,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(319,21): error C3861: 'LJUSB_Read': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(322,13): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(343,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(348,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(356,9): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(367,5): error C3861: 'LJUSB_CloseDevice': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(412,23): error C3861: 'LJUSB_GetLibraryVersion': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(414,53): error C2065: 'U3_PRODUCT_ID': undeclared identifier
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(414,35): error C3861: 'LJUSB_GetDevCount': identifier not found
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(559,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Daniela\source\repos\PidController\PidControllerWindows\PidControllerWindows\src\pidProjectLib.cpp(583,25): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data

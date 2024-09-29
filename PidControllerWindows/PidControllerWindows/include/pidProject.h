@@ -5,9 +5,8 @@
 #include <fstream>
 #include <chrono>
 #include <thread>
-//#include "slab_usb_i2c.h"  // Include Silicon Labs CP2112 API
-//#include "hidapi.h"
-//#include "HIDDevice.h"
+#include <LabJackM.h>
+#include <LabJackUD.h>
 #include <Max31889.h>
 
 namespace PidProject {
@@ -16,6 +15,7 @@ namespace PidProject {
 #define defaultKp 0.042 // %power/C (1--% power is 1.0) 
 #define defaultTi 188.0 // seconds
 #define defaultTd 28.2 // seconds
+#define defaultTset 24.0 // Celsius
 
 
 class HeaterController {
@@ -25,16 +25,20 @@ public:
     void Cleanup();
     // Function to set heater power in percentage (0% to 100%)
     void SetPower(float powerPercentage);
+    void configurePWM();
 
     bool heaterEnabled;
     bool powerUpdateEnabled;
+private:
+    LJ_HANDLE lngHandle;
 };
 
 class PidController {
 public:
     PidController(float inKp = defaultKp, 
                   float inTi = defaultTi, 
-                  float inTd = defaultTd, 
+                  float inTd = defaultTd,
+                  float inTemperatureSetpoint = defaultTset,
                   bool inPowerUpdateEnabled = true, 
                   bool inPTermEnabled = true, 
                   bool inITermEnabled = true,

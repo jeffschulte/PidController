@@ -18,9 +18,6 @@
     <ClCompile Include="PidControllerWindows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ConsoleApplication1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\CP2112.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -28,9 +25,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MAX31889viaCP2112.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pidProject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\pidProjectLib.cpp">
@@ -62,5 +56,27 @@
     <ClInclude Include="include\Types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="libs\LabJackM.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="libs\LabJackUD.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="libs\SLABHIDDevice.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="libs\SLABHIDtoSMBus.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libs\SLABHIDDevice.dll">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="libs\SLABHIDtoSMBus.dll">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -131,11 +131,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="PidControllerWindows.cpp" />
-    <ClCompile Include="src\ConsoleApplication1.cpp" />
     <ClCompile Include="src\CP2112.cpp" />
     <ClCompile Include="src\Max31889.cpp" />
     <ClCompile Include="src\MAX31889viaCP2112.cpp" />
-    <ClCompile Include="src\pidProject.cpp" />
     <ClCompile Include="src\pidProjectLib.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +145,16 @@
     <ClInclude Include="include\silabs_sal.h" />
     <ClInclude Include="include\SLABCP2112.h" />
     <ClInclude Include="include\Types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="libs\LabJackM.lib" />
+    <Library Include="libs\LabJackUD.lib" />
+    <Library Include="libs\SLABHIDDevice.lib" />
+    <Library Include="libs\SLABHIDtoSMBus.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libs\SLABHIDDevice.dll" />
+    <None Include="libs\SLABHIDtoSMBus.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
