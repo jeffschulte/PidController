@@ -79,7 +79,8 @@ private:
     void LogToFile(float timeSinceStart, float temperatureSetpoint, float currentTemperature, float power, float pTerm, float iTerm, float dTerm);
     float temperatureSetpoint;
     float kp, ti, td; // PID coefficients
-    float lastError, integralSum;
+    float lastError;
+    float integralSum;
     float currentPower;
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime = std::chrono::high_resolution_clock::now(); 
     std::chrono::time_point<std::chrono::high_resolution_clock> latestTime;

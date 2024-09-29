@@ -34,7 +34,6 @@ void HeaterController::configurePWM() {
 }
 
 
-
 void HeaterController::Initialize() {
     if (heaterEnabled) {
         // Initialize variables
@@ -65,9 +64,10 @@ void HeaterController::Cleanup() {
 void HeaterController::SetPower(float powerPercentage) {
     if (powerUpdateEnabled) {
         printf("Setting power to %f\n", powerPercentage);
-        //SetPwmPower();
         // Configure PWM on FIO4 with an initial duty cycle of 50% (32768 out of 65535)
         
+        // The Duty Cycle Setting should be inverted compared to power
+        powerPercentage = (100.0 - powerPercentage);
         //int dutyCycle = 32768;  // Start at 50% duty cycle
         int dutyCycle = floor(powerPercentage * 65535.0 / 100.0);  // Start at 50% duty cycle
         if (dutyCycle > 65535) dutyCycle = 65535;  // Cap, just incase
@@ -97,14 +97,23 @@ PidController::PidController(float inKp,
                                 bool inITermEnabled,
                                 bool inDTermEnabled,
                                 bool inHeaterEnabled)
-    : temperatureSetpoint(inTemperatureSetpoint), lastError(0.0f), integralSum(0.0f), currentPower(0.0f), kp(inKp),
-        ti(inTi), td(inTd), pTermEnabled(inPTermEnabled), iTermEnabled(inITermEnabled), dTermEnabled(inDTermEnabled) {
+    : temperatureSetpoint(inTemperatureSetpoint), kp(inKp), ti(inTi), td(inTd), pTermEnabled(inPTermEnabled), 
+        iTermEnabled(inITermEnabled), dTermEnabled(inDTermEnabled) {
 
         heater.heaterEnabled = inHeaterEnabled;
         heater.powerUpdateEnabled = inPowerUpdateEnabled;
+        integralSum = 0.0;
+        currentPower = 0.0;
+
         max31889.initialize();
+        printf("Initialized Thermometer!!!\n");
+
+        float currentTemperature = max31889.temperature();
+        lastError = temperatureSetpoint - currentTemperature;
+
         heater.Initialize();
-        latestTime = startTime;
+
+        latestTime = std::chrono::high_resolution_clock::now();
         logFile.open("logFile.csv");
         if (!logFile.is_open()) {
             std::cout << "Error opening to Log File!" << std::endl;
@@ -117,6 +126,7 @@ PidController::~PidController() {
     heater.Cleanup();
     max31889.cleanup();
     logFile.close();
+    printf("All cleaned up!!!\n");
 }
 
 void PidController::SetTemperatureSetpoint(float setpoint) {
@@ -195,35 +205,41 @@ void PidController::LogToFile(float timeSinceStart, float temperatureSetpoint, f
 void PidController::UpdatePower() {
     //Calculate the error (difference between setpoint and current temperature)
     float currentTemperature = max31889.temperature();
-    //float currentTemperature = 10.0;
-    printf("Temp = %f\n", currentTemperature);
     float error = temperatureSetpoint - currentTemperature;
-    
+
     // Get time and calculate time delta between now and last update
-    auto newTime = std::chrono::high_resolution_clock::now(); 
+    std::chrono::time_point<std::chrono::high_resolution_clock> newTime = std::chrono::high_resolution_clock::now();
     float timeDelta = (std::chrono::duration<float>(newTime - latestTime)).count();
 
     // Proportional term
     float pTerm = pTermEnabled ? kp * error : 0.0f;
 
     // Integral term
-    integralSum += error * timeDelta; // Accumulate error over time
+    integralSum += (error * timeDelta); // Accumulate error over time
     float iTerm = iTermEnabled ? kp * integralSum / ti : 0.0f;
 
     // Derivative term (difference in error)
     float dTerm = dTermEnabled ? - kp * td * (error - lastError) / timeDelta: 0.0f;
+    printf("Temp = %f\n", currentTemperature);
+    printf("error %f, pTerm %f, iTerm %f, dTerm %f\n", error, pTerm, iTerm, dTerm);
+    printf("kp %f td %f ti %f, lastError %f integralSum %f\n", kp, td, ti, lastError, integralSum);
+    printf("timeDelta %f, newTime %d, latestTime %d\n", timeDelta, newTime.time_since_epoch(), latestTime.time_since_epoch());
 
 
     // Calculate total output power (clamp to 0-100%)
-    float power = pTerm + iTerm + dTerm;
+    float power = 100.0 * (pTerm + iTerm + dTerm);
     // if power is outside of bounds, adjust the integral term so that it is in bounds (anti-windup)
     if (power > 100.0f) {
-        iTerm -= (power - 100.0);
-        integralSum = ti * iTerm / kp;
+        // anti-wind up needs tuning
+        //iTerm -= (power - 100.0);
+        //integralSum = ti * iTerm / kp;
+        printf("power larger, power %f, iTerm %f, integralSum %f\n", power, iTerm, integralSum);
         power = 100.0;
     } else if (power < 0.0f) {
-        iTerm += power;
-        integralSum = ti * iTerm / kp;
+        // anti-wind up needs tuning
+        //iTerm += (0 - power);
+        //integralSum = ti * iTerm / kp;
+        printf("power smaller, power %f, iTerm %f, integralSum %f\n", power, iTerm, integralSum);
         power = 0.0f;
     }
 
